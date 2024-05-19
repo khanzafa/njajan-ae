@@ -7,13 +7,15 @@ import { set } from 'firebase/database';
 const firestore = db;
 
 export type Kuliner = {
-    id: string;
-    nama: string;
-    jenis: string;
-    berdiri: number;
-    alamat: string;
-    pemilik: string;
-    waktu: string;
+    id?: string;
+    nama?: string;
+    jenis?: string;
+    berdiri?: number;
+    alamat?: string;
+    pemilik?: string;
+    waktu?: string;
+    foto?: string;
+    gmaps?: string;
 }
 
 const kulinerService = {

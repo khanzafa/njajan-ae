@@ -3,6 +3,7 @@ import 'firebase/firestore';
 import { db, auth, storage } from '@/firebase/config';
 import { addDoc, setDoc, getDoc, getDocs, deleteDoc, doc, collection } from 'firebase/firestore';
 import { set } from 'firebase/database';
+import kulinerService, { Kuliner } from './kuliner-service';
 
 const firestore = db;
 
@@ -28,7 +29,7 @@ const ulasanService = {
             const kulinerRef = doc(firestore, 'ulasanKuliner', kulinerId);
             const ulasanCollection = collection(kulinerRef, 'ulasan');
             const ulasanSnapshot = await getDocs(ulasanCollection);
-            const ulasanList = ulasanSnapshot.docs.map(doc => {return {id: doc.id, ...doc.data()} as Ulasan});
+            const ulasanList = ulasanSnapshot.docs.map(doc => { return { id: doc.id, ...doc.data() } as Ulasan });
             return ulasanList;
         } catch (error) {
             console.error('Error getting ulasan: ', error);
@@ -52,7 +53,7 @@ const ulasanService = {
             const kulinerRef = doc(firestore, 'ulasanKuliner', kulinerId);
             const ulasanRef = doc(kulinerRef, 'ulasan', ulasanId);
             const ulasanDoc = await getDoc(ulasanRef);
-            const ulasanData = {id: ulasanDoc.id, ...ulasanDoc.data()} as Ulasan;            
+            const ulasanData = { id: ulasanDoc.id, ...ulasanDoc.data() } as Ulasan;
             if (ulasanDoc.exists()) {
                 return ulasanData;
             } else {
@@ -72,7 +73,7 @@ const ulasanService = {
             const ulasanRef = doc(kulinerRef, 'ulasan', ulasanId);
             const recentUlasan = await getDoc(ulasanRef);
             updatedUlasanData.waktu = new Date();
-            updatedUlasanData = {...recentUlasan.data(), ...updatedUlasanData};
+            updatedUlasanData = { ...recentUlasan.data(), ...updatedUlasanData };
             await setDoc(ulasanRef, updatedUlasanData);
         } catch (error) {
             console.error('Error updating ulasan: ', error);
@@ -108,7 +109,7 @@ const ulasanService = {
             const ulasanRef = doc(kulinerRef, 'ulasan', ulasanId);
             const balasanCollection = collection(ulasanRef, 'balasan');
             const balasanSnapshot = await getDocs(balasanCollection);
-            const balasanList = balasanSnapshot.docs.map(doc => {return {id: doc.id, ...doc.data()} as Balasan});
+            const balasanList = balasanSnapshot.docs.map(doc => { return { id: doc.id, ...doc.data() } as Balasan });
             return balasanList;
         } catch (error) {
             console.error('Error getting balasan: ', error);
@@ -123,7 +124,7 @@ const ulasanService = {
             const ulasanRef = doc(kulinerRef, 'ulasan', ulasanId);
             const balasanRef = doc(ulasanRef, 'balasan', balasanId);
             const balasanDoc = await getDoc(balasanRef);
-            const balasanData = {id: balasanDoc.id, ...balasanDoc.data()} as Balasan;            
+            const balasanData = { id: balasanDoc.id, ...balasanDoc.data() } as Balasan;
             if (balasanDoc.exists()) {
                 return balasanData;
             } else {
@@ -143,7 +144,7 @@ const ulasanService = {
             const ulasanRef = doc(kulinerRef, 'ulasan', ulasanId);
             const balasanRef = doc(ulasanRef, 'balasan', balasanId);
             const balasanDoc = await getDoc(balasanRef);
-            balasanData = {...balasanDoc.data(), ...balasanData};
+            balasanData = { ...balasanDoc.data(), ...balasanData };
             await setDoc(balasanRef, balasanData);
         } catch (error) {
             console.error('Error updating balasan ulasan: ', error);
@@ -159,6 +160,47 @@ const ulasanService = {
             await deleteDoc(balasanRef);
         } catch (error) {
             console.error('Error deleting balasan ulasan: ', error);
+        }
+    },
+
+    // Read: Mengambil data semua ulasan dari semua kuliner di Firestore
+    async getKulinerRanking() {
+        try {
+            const kulinerCollection = collection(firestore, 'ulasanKuliner');
+            const kulinerSnapshot = await getDocs(kulinerCollection);
+            const kulinerList = kulinerSnapshot.docs.map(doc => { return { id: doc.id, ...doc.data() } });
+    
+            const kulinerRanking = await Promise.all(kulinerList.map(async kuliner => {                
+                const kulinerData = await kulinerService.getKuliner(kuliner.id);
+                const ulasanList = await this.getDaftarUlasan(kuliner.id);
+    
+                let totalRating = 0;
+                ulasanList.forEach(ulasan => {
+                    totalRating += ulasan.rating;
+                });
+                const totalUlasan = ulasanList.length;
+                const rating = totalUlasan > 0 ? totalRating / totalUlasan : 0;
+    
+                return {
+                    kulinerData,
+                    totalUlasan,
+                    rating
+                };
+            }));
+    
+            // Sorting berdasarkan rating tertinggi dan jumlah ulasan terbanyak
+            kulinerRanking.sort((a, b) => {
+                if (b.rating !== a.rating) {
+                    return b.rating - a.rating; // Rating tertinggi terlebih dahulu
+                } else {
+                    return b.totalUlasan - a.totalUlasan; // Jika rating sama, jumlah ulasan terbanyak terlebih dahulu
+                }
+            });
+    
+            return kulinerRanking;
+        } catch (error) {
+            console.error('Error getting ulasan: ', error);
+            return [];
         }
     }
 

@@ -7,11 +7,12 @@ import { set } from 'firebase/database';
 const firestore = db;
 
 export type Menu = {
-    id: string;
-    nama: string;
-    harga: number;
-    kategori: string;
-    deskripsi: string;
+    id?: string;
+    nama?: string;
+    harga?: number;
+    kategori?: string;
+    deskripsi?: string;
+    foto?: string;
 }
 
 const menuService = {
