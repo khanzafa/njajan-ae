@@ -4,6 +4,10 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
+import { useUserSession } from '@/hooks/use-user-session';
+import { signInWithEmail, signInWithGoogle, signOut } from '@/services/firebase/auth';
+import { createSession, removeSession } from '@/actions/auth-action';
+
 export default function LoginPage() {
     const router = useRouter();
     const [email, setEmail] = useState('');
@@ -14,15 +18,25 @@ export default function LoginPage() {
         e.preventDefault();
         setError(null);
 
-        const auth = getAuth();
-        try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            // Jika berhasil login, arahkan ke halaman dashboard
-            router.push('/dashboard');
-        } catch (error: any) {
-            setError(error.message);
+        const userUid = await signInWithEmail(email, password);
+        if (userUid) {
+            await createSession(userUid);
         }
     };
+
+    const handleSignInGoogle = async () => {
+        const userUid = await signInWithGoogle();
+        if (userUid) {
+            await createSession(userUid);
+        }
+    };
+
+    const handleSignIn = async () => {
+        const userUid = await signInWithEmail(email, password);
+        if (userUid) {
+            await createSession(userUid);
+        }
+    }
 
     return (
         <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -101,6 +115,17 @@ export default function LoginPage() {
                             </button>
                         </div>
                     </form>
+
+                    {/* Login With Google */}
+                    <div className="mt-6">
+                        <button
+                            onClick={handleSignInGoogle}
+                            type="button"
+                            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        >
+                            Sign in with Google
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

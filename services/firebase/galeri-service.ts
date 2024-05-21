@@ -1,6 +1,6 @@
 // Firebase
 import firebase from 'firebase/app';
-import { db, auth, storage } from '@/firebase/config';
+import { db, auth, storage } from '@/firebase/client';
 
 // Firestore
 import 'firebase/firestore';

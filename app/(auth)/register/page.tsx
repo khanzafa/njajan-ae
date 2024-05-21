@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { signUpWithEmail } from '@/services/firebase/auth';
 
 export default function UserRegisterPage() {
     const router = useRouter();
@@ -14,9 +14,8 @@ export default function UserRegisterPage() {
         e.preventDefault();
         setError(null);
 
-        const auth = getAuth();
         try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const userCredential = await signUpWithEmail(email, password);
             // Jika berhasil register, arahkan ke halaman login
             router.push('/login');
         } catch (error: any) {

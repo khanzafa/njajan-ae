@@ -1,6 +1,6 @@
 // Firebase
 import firebase from 'firebase/app';
-import { db, auth, storage } from '@/firebase/config';
+import { db, auth, storage } from '@/firebase/client';
 
 // Firestore
 import 'firebase/firestore';
@@ -19,11 +19,18 @@ import {
     list,
 } from 'firebase/storage';
 
-// Realtime Database
-import { set } from 'firebase/database';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import {
+    onAuthStateChanged as _onAuthStateChanged,
+} from "firebase/auth";
+import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 
 const authService = {
+
+    onAuthStateChanged(cb: any) {
+        return _onAuthStateChanged(auth, cb);
+    },
+
+
     // Register: Mendaftarkan user baru
     async register(email: string, password: string) {
         try {
@@ -46,4 +53,28 @@ const authService = {
         }
     },
 
+    async loginGoogle() {
+        try {
+            const provider = new GoogleAuthProvider();
+            const userCredential = await signInWithPopup(auth, provider);
+            return userCredential;
+        } catch (error) {
+            console.error('Error logging in user with Google: ', error);
+            throw error;
+        }
+    },
+
+    async logout() {
+        try {
+            await auth.signOut();
+        } catch (error) {
+            console.error('Error logging out user: ', error);
+            throw error;
+        }
+    },
+
+    async getUser() {
+        const user = auth.currentUser;
+        return user;
+    }
 }

@@ -1,6 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
-import { db, auth, storage } from '@/firebase/config';
+import { db, auth, storage } from '@/firebase/client';
 import { addDoc, setDoc, getDoc, getDocs, deleteDoc, doc, collection } from 'firebase/firestore';
 import { set } from 'firebase/database';
 

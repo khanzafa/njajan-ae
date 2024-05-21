@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "firebase/config.js", "app/kuliner/[id]"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "firebase/client.js", "app/kuliner/[kulinerId]", "providers/NextAuthProvider.js", "services/firebase/auth-service-workers.js"],
   "exclude": ["node_modules"]
 }
