@@ -13,7 +13,7 @@ import { Rating } from 'react-simple-star-rating'
 import Link from 'next/link';
 import { checkSession } from '@/actions/auth-action';
 import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies';
-import { getCurrentUser } from '@/services/firebase/auth';
+import { getCurrentUser } from '@/services/firebase/auth-service';
 import { User } from 'next-auth';
 
 function classNames(...classes: string[]) {

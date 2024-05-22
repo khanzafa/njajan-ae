@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { onAuthStateChanged } from '@/services/firebase/auth';
+import { onAuthStateChanged } from '@/services/firebase/auth-service';
 
 export function useUserSession(InitSession: string | null) {
   const [userUid, setUserUid] = useState<string | null>(InitSession);

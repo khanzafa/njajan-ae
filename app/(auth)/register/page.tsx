@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { signUpWithEmail } from '@/services/firebase/auth';
+import { signUpWithEmail } from '@/services/firebase/auth-service';
 
 export default function UserRegisterPage() {
     const router = useRouter();

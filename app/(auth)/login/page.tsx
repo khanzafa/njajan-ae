@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 import { useUserSession } from '@/hooks/use-user-session';
-import { signInWithEmail, signInWithGoogle, signOut } from '@/services/firebase/auth';
+import { signInWithEmail, signInWithGoogle, signOut } from '@/services/firebase/auth-service';
 import { createSession, removeSession } from '@/actions/auth-action';
 
 export default function LoginPage() {
