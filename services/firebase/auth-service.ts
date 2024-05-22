@@ -7,7 +7,7 @@ import {
   createUserWithEmailAndPassword,
 } from 'firebase/auth';
 
-import { auth } from '@/firebase/client';
+import auth from '@/firebase/client';
 
 export function onAuthStateChanged(callback: (authUser: User | null) => void) {
   return _onAuthStateChanged(auth, callback);
