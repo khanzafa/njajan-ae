@@ -12,11 +12,11 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDi
 type DetailUlasanModalProps = {
     isOpen: boolean;
     onRequestClose: () => void;
-    ulasan: Ulasan;
+    ulasan: any;
 };
 
 const DetailUlasanModal: React.FC<DetailUlasanModalProps> = ({ isOpen, onRequestClose, ulasan }) => {
-    const [balasanList, setBalasanList] = useState<Balasan[]>([]);
+    const [balasanList, setBalasanList] = useState<any[]>([]);
     const [newBalasan, setNewBalasan] = useState<string>('');
 
     const router = useRouter();

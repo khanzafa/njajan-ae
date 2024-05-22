@@ -169,8 +169,8 @@ export default function Page({ params }: { params: { kulinerId: string } }) {
                             {/* Add more data rows for other rankings */}
                             {/* Show leaderboard */}
                             {
-                                leaderboardKuliner.map((kuliner) => (
-                                    <tr>
+                                leaderboardKuliner.map((kuliner, index) => (
+                                    <tr key={index}>
                                         <td className="px-4 py-3 flex items-center">
                                             <img src="https://source.unsplash.com/200x200/?restaurant" alt="avatar" className="w-8 h-8 rounded-full" />
                                             <span className="mx-2">{kuliner.kulinerData.nama}</span>

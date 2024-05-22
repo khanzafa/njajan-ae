@@ -8,7 +8,8 @@ import { Foto } from '@/services/firebase/galeri-service';
 import { Menu } from '@/services/firebase/menu-service';
 import { Ulasan, Balasan } from '@/services/firebase/ulasan-service';
 import Header from '@/components/Header/page';
-import ReactStars from "react-rating-stars-component";
+// import ReactStars from "react-rating-stars-component";
+import { Rating } from 'react-simple-star-rating'
 import Link from 'next/link';
 import { checkSession } from '@/actions/auth-action';
 import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies';
@@ -49,10 +50,10 @@ export default function DetailKulinerPage({ params }: { params: { kulinerId: str
         async function checkUserSession() {
             const session = await checkSession();
             setSession(session);
-            const user = await getCurrentUser();   
+            const user = await getCurrentUser();
             setUser(user);
         }
-        
+
         async function fetchKuliner() {
             const response = await fetch(`/api/kuliner/${kulinerId}`);
             const data = await response.json();
@@ -74,7 +75,7 @@ export default function DetailKulinerPage({ params }: { params: { kulinerId: str
             console.log("Galeri Data: ", data)
         }
 
-        checkUserSession();        
+        checkUserSession();
         fetchKuliner();
         fetchUlasan();
         fetchMenu();
@@ -96,7 +97,7 @@ export default function DetailKulinerPage({ params }: { params: { kulinerId: str
 
     const handleUlasanSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setLoading(true);        
+        setLoading(true);
 
         try {
             const response = await fetch(`/api/kuliner/${kulinerId}/ulasan`, {
@@ -269,7 +270,7 @@ export default function DetailKulinerPage({ params }: { params: { kulinerId: str
                                                 </div>
                                                 <div className="mb-4">
                                                     <label htmlFor="rating" className="block text-sm font-medium text-gray-700 dark:text-gray-200">Rating</label>
-                                                    <ReactStars
+                                                    {/* <ReactStars
                                                         name="rating"
                                                         count={5}
                                                         onChange={(newRating: any) => {
@@ -277,6 +278,15 @@ export default function DetailKulinerPage({ params }: { params: { kulinerId: str
                                                         }}
                                                         size={24}
                                                         activeColor="#ffd700"
+                                                    /> */}
+                                                    <Rating
+                                                        onClick={(rate: number) => {
+                                                            setRating(rate)
+                                                        }}
+                                                    // onPointerEnter={onPointerEnter}
+                                                    // onPointerLeave={onPointerLeave}
+                                                    // onPointerMove={onPointerMove}
+                                                    /* Available Props */
                                                     />
                                                 </div>
                                                 <div className="flex justify-end">
@@ -293,9 +303,9 @@ export default function DetailKulinerPage({ params }: { params: { kulinerId: str
                                             <div className="bg-red-100 text-red-700 p-4 rounded-md">
                                                 <p>Silakan <span>
                                                     <Link href="/login" className="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                                    login
+                                                        login
                                                     </Link>
-                                                    </span> untuk memberikan ulasan.</p>
+                                                </span> untuk memberikan ulasan.</p>
                                             </div>
                                         )
                                     }

@@ -16,7 +16,7 @@ export default function KulinerProfile() {
     //     foto: 'https://source.unsplash.com/200x200/?restaurant',
     //     gmaps: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.073013073073!2d106.822242314769!3d-6.175392995527!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f5b6b7b7b7b7%3A0x2e69f5b6b7b7b7b7!2sMonumen%20Nasional!5e0!3m2!1sid!2sid!4v1633663666824!5m2!1sid!2sid'
     // };
-
+    const router = useRouter();
     const { kulinerId } = useParams();
     // const id = 'xC96zsuHoQIutgfkE5Iy';
     const id = kulinerId;
@@ -34,9 +34,7 @@ export default function KulinerProfile() {
 
     if (!kulinerData) {
         return <div>Loading...</div>;
-    }
-
-    const router = useRouter();
+    }    
     // const { kulinerId } = router.query;
 
     const handleEditClick = () => {

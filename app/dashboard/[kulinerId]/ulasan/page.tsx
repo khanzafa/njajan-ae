@@ -8,7 +8,7 @@ import DetailUlasanModal from '@/components/Dashboard/DetailUlasanModal';
 
 export default function UlasanPage() {
     const { kulinerId } = useParams();
-    const [daftarUlasan, setDaftarUlasan] = useState<Ulasan[]>([]);
+    const [daftarUlasan, setDaftarUlasan] = useState<any[]>([]);
     const [selectedUlasan, setSelectedUlasan] = useState<Ulasan | null>(null);
 
     async function fetchUlasan() {

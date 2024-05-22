@@ -1,7 +1,11 @@
 import Image from "next/image";
 
 export default function Home() {
-  
+  return (
+    <div>
+      Ini halaman home
+    </div>
+  )
   // return (
   //   // <main classNameName="flex min-h-screen flex-col items-center justify-between p-24">
   //   //   <div classNameName="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
