@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
-import { useUserSession } from '@/hooks/use-user-session';
 import { signInWithEmail, signInWithGoogle, signOut } from '@/services/firebase/auth-service';
 import { createSession, removeSession } from '@/actions/auth-action';
 import Link from 'next/link';
