@@ -31,31 +31,35 @@ export default function Header({ session }: { session: string | null }) {
 
 
     return (
-        <header className="fixed w-full bg-white dark:bg-[#1B262C] dark:text-white shadow-md p-4 z-50">
+        <header className="fixed w-full bg-[#DBE2EF] dark:bg-[#112D4E] dark:text-[#F9F7F7] shadow-md p-4 z-50">
             <div className="container mx-auto flex justify-between items-center">
-                <Link href="/" className="text-2xl font-bold">
+                <Link href="/" className="text-2xl font-bold text-[#112D4E] dark:text-[#F9F7F7]">
                     Njajan AE
                 </Link>
                 <nav className="space-x-4">
-                    <Link href="/kuliner" className="hover:text-blue-500">Kuliner</Link>
-                    <Link href="/about" className="hover:text-blue-500">About</Link>
-                    <Link href="/mitra" className="hover:text-blue-500">Mitra</Link>
+                    <Link href="/kuliner" className="hover:text-[#3F72AF] dark:hover:text-[#DBE2EF]">Kuliner</Link>
+                    <Link href="/about" className="hover:text-[#3F72AF] dark:hover:text-[#DBE2EF]">About</Link>
+                    <Link href="/mitra" className="hover:text-[#3F72AF] dark:hover:text-[#DBE2EF]">Mitra</Link>
                 </nav>
                 <div>
                     {userSessionId ? (
                         <button
                             onClick={handleSignOut}
-                            className="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            className="bg-[#3F72AF] text-white px-4 py-2 rounded-md hover:bg-[#112D4E] focus:outline-none focus:ring-2 focus:ring-[#3F72AF] dark:bg-[#3F72AF] dark:focus:ring-[#3F72AF]"
                         >
                             Logout
                         </button>
                     ) : (
-                        <Link href="/login" className="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        <Link 
+                        href="/login" 
+                        className="bg-[#3F72AF] text-white px-4 py-2 rounded-md hover:bg-[#112D4E] focus:outline-none focus:ring-2 focus:ring-[#3F72AF] dark:bg-[#3F72AF] dark:focus:ring-[#3F72AF]">
                             Login
                         </Link>
                     )}
                 </div>
             </div>
         </header>
+
+
     );
 }

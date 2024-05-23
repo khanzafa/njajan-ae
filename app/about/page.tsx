@@ -6,8 +6,8 @@ export default function AboutPage() {
     return (
         <div>
             {/* <Header /> */}
-            <div className="p-4 pt-20">
-                <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+            <div className="p-4 pt-20 bg-[#DBE2EF] dark:bg-[#1B262C] min-h-screen">
+            <div className="p-4 border-2 border-[#B2BABB] border-dashed rounded-lg dark:border-[#DBE2EF]">
                     <div className="mb-4">
                         <h1 className="text-2xl font-bold">Tentang Njajan AE</h1>
                     </div>
