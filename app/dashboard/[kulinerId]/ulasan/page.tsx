@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 
-export default function UlasanPage() {
+export default function Page() {
     const { kulinerId } = useParams();
     const [daftarUlasan, setDaftarUlasan] = useState<any[]>([]);
     const [selectedUlasan, setSelectedUlasan] = useState<Ulasan | null>(null);
@@ -66,7 +66,7 @@ export default function UlasanPage() {
     );
 }
 
-export function DetailUlasan({ ulasan, closeModal }: { ulasan: any, closeModal: () => void }) {
+function DetailUlasan({ ulasan, closeModal }: { ulasan: any, closeModal: () => void }) {
     const [balasanList, setBalasanList] = useState<any[]>([]);
     const [newBalasan, setNewBalasan] = useState<string>('');
 
