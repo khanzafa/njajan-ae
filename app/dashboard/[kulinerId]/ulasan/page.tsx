@@ -29,15 +29,15 @@ export default function UlasanPage() {
     };
 
     return (
-        <div className="p-4 sm:ml-64">
+        <div className="p-4 sm:ml-64 bg-[#DBE2EF] dark:bg-[#1B262C] min-h-screen">
             {!selectedUlasan ? (
-                <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+                <div className="p-4 border-2 border-[#B2BABB] border-dashed rounded-lg dark:border-[#DBE2EF]">
                     <div className="mb-4">
-                        <h1 className="text-xl">Ulasan Pelanggan</h1>
+                        <h1 className="text-xl font-bold">Ulasan Pelanggan</h1>
                     </div>
                     <div className="grid grid-cols-1 gap-4">
                         {daftarUlasan?.map((ulasan) => (
-                            <div key={ulasan.id} onClick={() => openModal(ulasan)} className="bg-white rounded shadow-md dark:bg-[#1B262C] dark:text-white p-4 cursor-pointer">
+                            <div key={ulasan.id} onClick={() => openModal(ulasan)} className="bg-[#FFFFFF] dark:bg-[#112D4E] dark:text-white rounded shadow-md p-4 cursor-pointer">
                                 <div className="flex justify-between">
                                     <h2 className="text-lg font-medium">{ulasan.nama}</h2>
                                     <p className="text-gray-500">{new Date(ulasan.waktu.seconds * 1000).toLocaleString()}</p>

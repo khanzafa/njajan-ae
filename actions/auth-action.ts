@@ -3,31 +3,52 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { HOME_ROUTE, ROOT_ROUTE, SESSION_COOKIE_NAME } from '@/constants/constant';
+import { HOME_ROUTE, DASHBOARD_ROUTE, ROOT_ROUTE, USER_SESSION_COOKIE_NAME, OWNER_SESSION_COOKIE_NAME } from '@/constants/constant';
+
+import { checkCulinaryExist } from '@/services/firebase/auth-service'
 
 export async function createSession(uid: string) {
-  cookies().set(SESSION_COOKIE_NAME, uid, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    maxAge: 60 * 60 * 24, // One day
-    path: '/',
-  });
+  const culinaryExist = await checkCulinaryExist(uid);
 
-  redirect(HOME_ROUTE);
+  if (culinaryExist) {
+    cookies().set(OWNER_SESSION_COOKIE_NAME, uid, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 60 * 60 * 24, // One day
+      path: '/',
+    });
+    redirect(DASHBOARD_ROUTE);
+  } else {
+    cookies().set(USER_SESSION_COOKIE_NAME, uid, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 60 * 60 * 24, // One day
+      path: '/',
+    });
+    redirect(HOME_ROUTE);
+  }
+
 }
 
 export async function removeSession() {
-  cookies().delete(SESSION_COOKIE_NAME);
+  if (cookies().get(USER_SESSION_COOKIE_NAME)) {
+    cookies().delete(USER_SESSION_COOKIE_NAME);
+  } else if (cookies().get(OWNER_SESSION_COOKIE_NAME)) {
+    cookies().delete(OWNER_SESSION_COOKIE_NAME);
+  } 
 
   // redirect(ROOT_ROUTE);
 }
 
 export async function checkSession() {
-  const session = cookies().get(SESSION_COOKIE_NAME);
+  const userSession = cookies().get(USER_SESSION_COOKIE_NAME);
+  const ownerSession = cookies().get(OWNER_SESSION_COOKIE_NAME);
 
-  if (!session) {
+  if (userSession) {
+    return { type: 'user', value: userSession.value || null };
+  } else if (ownerSession) {
+    return { type: 'owner', value: ownerSession.value || null };
+  } else {
     return null;
   }
-
-  return session;
 }

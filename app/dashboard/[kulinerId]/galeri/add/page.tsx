@@ -50,12 +50,12 @@ export default function AddGaleriPage() {
     };
 
     return (
-        <div className="p-4 sm:ml-64">
-            <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+        <div className="p-4 sm:ml-64 bg-[#DBE2EF] dark:bg-[#1B262C] min-h-screen">
+            <div className="p-4 border-2 border-[#B2BABB] border-dashed rounded-lg dark:border-[#DBE2EF]">
                 <div className="mb-4">
-                    <h1 className="text-xl">Tambah Foto ke Galeri</h1>
+                    <h1 className="text-xl font-bold">Tambah Foto ke Galeri</h1>
                 </div>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className='bg-[#F9F7F7] dark:bg-[#112D4E] rounded shadow-md p-6'>
                     <div className="mb-4">
                         <label htmlFor="file" className="block text-sm font-medium text-gray-700 dark:text-gray-200">Upload Foto</label>
                         <input
@@ -83,7 +83,7 @@ export default function AddGaleriPage() {
                     <div className="flex justify-end">
                         <button
                             type="submit"
-                            className="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            className="bg-[#3F72AF] text-white px-4 py-2 rounded-md hover:bg-[#112D4E] focus:outline-none focus:ring-2 focus:ring-[#3F72AF] dark:bg-[#3F72AF] dark:hover:bg-[#112D4E] dark:focus:ring-[#3F72AF]"
                             disabled={loading}
                         >
                             {loading ? 'Mengunggah...' : 'Unggah Foto'}

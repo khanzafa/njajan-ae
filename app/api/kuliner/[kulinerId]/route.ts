@@ -9,8 +9,16 @@ export async function GET(request: Request, { params }: { params: { kulinerId: s
 }
 
 export async function PUT(request: Request, { params }: { params: { kulinerId: string } }) {
+    // const kulinerId = params.kulinerId;
+    // const data = await request.json();
     const kulinerId = params.kulinerId;
-    const data = await request.json();
+    const formData = await request.formData();
+    const data: any = {};
+
+    formData.forEach((value, key) => {
+        data[key] = value;
+    });
+    
     await kulinerService.updateKuliner(kulinerId, data);
     return new Response('Data berhasil diupdate!', { status: 200 });
 }

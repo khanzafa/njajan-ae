@@ -9,8 +9,15 @@ export async function GET(request: Request, { params }: { params: { kulinerId: s
 }
 
 export async function POST(request: Request, { params }: { params: { kulinerId: string } }) {
+    // const kulinerId = params.kulinerId;
+    // const data = await request.json();
     const kulinerId = params.kulinerId;
-    const data = await request.json();
+    const formData = await request.formData();
+    const data: any = {};
+
+    formData.forEach((value, key) => {
+        data[key] = value;
+    });
     await menuService.addMenu(kulinerId, data);
     return new Response('Data berhasil ditambahkan!', { status: 201 });
 }

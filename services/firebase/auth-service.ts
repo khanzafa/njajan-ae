@@ -6,8 +6,9 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from 'firebase/auth';
-
-import auth from '@/firebase/client';
+import { db, auth, storage } from '@/firebase/client';
+import { addDoc, setDoc, getDoc, getDocs, deleteDoc, doc, collection } from 'firebase/firestore';
+import { sign } from 'crypto';
 
 export function onAuthStateChanged(callback: (authUser: User | null) => void) {
   return _onAuthStateChanged(auth, callback);
@@ -27,6 +28,25 @@ export async function signUpWithEmail(email: string, password: string) {
   }
 }
 
+export async function addNewCulinary(
+  name: string,
+  email: string,
+  password: string,
+) {
+  try {
+    const uid = await signUpWithEmail(email, password);
+    const culinaryRef = doc(db, 'kuliner', uid? uid : '');
+    const result = await setDoc(culinaryRef, {
+      nama: name,
+    });
+
+    return result;
+  } catch (error) {
+    console.error('Error adding new culinary', error);
+  }
+}
+
+
 export async function signInWithEmail(email: string, password: string) {
   try {
     const result = await signInWithEmailAndPassword(auth, email, password);
@@ -38,6 +58,18 @@ export async function signInWithEmail(email: string, password: string) {
     return result.user.uid;
   } catch (error) {
     console.error('Error signing in with email', error);
+  }
+}
+
+export async function checkCulinaryExist(uid: string) {
+  try {
+    const culinaryRef = doc(db, 'kuliner', uid);
+    const culinaryDoc = await getDoc(culinaryRef);
+
+    return culinaryDoc.exists();
+  } catch (error) {
+    console.error('Error checking culinary exist', error);
+    return false;
   }
 }
 

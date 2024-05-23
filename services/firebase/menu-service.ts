@@ -1,8 +1,21 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
-import auth, { db, storage } from '@/firebase/client';
+import { db, auth, storage } from '@/firebase/client';
 import { addDoc, setDoc, getDoc, getDocs, deleteDoc, doc, collection } from 'firebase/firestore';
 import { set } from 'firebase/database';
+
+// Storage
+import {
+    ref,
+    uploadString,
+    uploadBytes,
+    deleteObject,
+    uploadBytesResumable,
+    getMetadata,
+    updateMetadata,
+    getDownloadURL,
+    list,
+} from 'firebase/storage';
 
 const firestore = db;
 
@@ -33,6 +46,10 @@ const menuService = {
     // Create: Menambahkan profil kuliner baru ke dalam Firestore
     async addMenu(kulinerId: string, menuData: any) {
         try {
+            const storageRef = ref(storage, `menuKuliner/${kulinerId}/${menuData.foto.name}`);
+            await uploadBytes(storageRef, menuData.foto);
+            const url = await getDownloadURL(storageRef);
+            menuData.foto = url;
             const kulinerRef = doc(firestore, 'menuKuliner', kulinerId);
             await addDoc(collection(kulinerRef, 'menu'), menuData);
         } catch (error) {

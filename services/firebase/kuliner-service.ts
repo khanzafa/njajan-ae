@@ -1,8 +1,21 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
-import auth, { db, storage } from '@/firebase/client';
+import { db, auth, storage } from '@/firebase/client';
 import { addDoc, setDoc, getDoc, getDocs, deleteDoc, doc, collection } from 'firebase/firestore';
 import { set } from 'firebase/database';
+
+// Storage
+import {
+    ref,
+    uploadString,
+    uploadBytes,
+    deleteObject,
+    uploadBytesResumable,
+    getMetadata,
+    updateMetadata,
+    getDownloadURL,
+    list,
+} from 'firebase/storage';
 
 const firestore = db;
 
@@ -64,8 +77,13 @@ const kulinerService = {
     // Update: Memperbarui data profil kuliner yang sudah ada di Firestore
     async updateKuliner(kulinerId: any, updatedData: any) {
         try {
+            console.log('Updated data: ', updatedData)
             const kulinerRef = doc(firestore, 'kuliner', kulinerId);
             const recentData = await getDoc(kulinerRef);
+            const storageRef = ref(storage, `kuliner/${kulinerId}/${updatedData.foto.name}`);
+            await uploadBytes(storageRef, updatedData.foto);
+            const url = await getDownloadURL(storageRef);
+            updatedData.foto = url;
             // Merge recent data with updated data
             updatedData = {...recentData.data(), ...updatedData};
             await setDoc(kulinerRef, updatedData);

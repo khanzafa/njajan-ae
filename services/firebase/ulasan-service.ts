@@ -1,6 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
-import auth, { db, storage } from '@/firebase/client';
+import { db, auth, storage } from '@/firebase/client';
 import { addDoc, setDoc, getDoc, getDocs, deleteDoc, doc, collection } from 'firebase/firestore';
 import { set } from 'firebase/database';
 import kulinerService, { Kuliner } from './kuliner-service';
@@ -166,18 +166,17 @@ const ulasanService = {
     // Read: Mengambil data semua ulasan dari semua kuliner di Firestore
     async getKulinerRanking() {
         try {
-            const kulinerCollection = collection(firestore, 'ulasanKuliner');
+            const kulinerCollection = collection(firestore, 'kuliner');
             const kulinerSnapshot = await getDocs(kulinerCollection);
-            const kulinerList = kulinerSnapshot.docs.map(doc => { return { id: doc.id, ...doc.data() } });
+            const kulinerList = kulinerSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     
-            const kulinerRanking = await Promise.all(kulinerList.map(async kuliner => {                
-                const kulinerData = await kulinerService.getKuliner(kuliner.id);
-                const ulasanList = await this.getDaftarUlasan(kuliner.id);
+            const kulinerRankingPromises = kulinerList.map(async kuliner => {
+                const [kulinerData, ulasanList] = await Promise.all([
+                    kulinerService.getKuliner(kuliner.id),
+                    this.getDaftarUlasan(kuliner.id)
+                ]);
     
-                let totalRating = 0;
-                ulasanList.forEach(ulasan => {
-                    totalRating += ulasan.rating;
-                });
+                const totalRating = ulasanList.reduce((acc, ulasan) => acc + ulasan.rating, 0);
                 const totalUlasan = ulasanList.length;
                 const rating = totalUlasan > 0 ? totalRating / totalUlasan : 0;
     
@@ -186,7 +185,9 @@ const ulasanService = {
                     totalUlasan,
                     rating
                 };
-            }));
+            });
+    
+            const kulinerRanking = await Promise.all(kulinerRankingPromises);
     
             // Sorting berdasarkan rating tertinggi dan jumlah ulasan terbanyak
             kulinerRanking.sort((a, b) => {
@@ -196,13 +197,14 @@ const ulasanService = {
                     return b.totalUlasan - a.totalUlasan; // Jika rating sama, jumlah ulasan terbanyak terlebih dahulu
                 }
             });
-    
+            console.log("Kuliner Ranking: ", kulinerRanking)
             return kulinerRanking;
         } catch (error) {
-            console.error('Error getting ulasan: ', error);
+            console.error('Error getting kuliner ranking: ', error);
             return [];
         }
     }
+    
 
 }
 

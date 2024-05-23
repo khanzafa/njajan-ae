@@ -80,6 +80,7 @@ export default function DetailKulinerPage({ params }: { params: { kulinerId: str
         fetchUlasan();
         fetchMenu();
         fetchGaleri();
+        console.log("Session: ", user)
     }, [kulinerId]);
 
     async function fetchBalasan(ulasanId: string) {
@@ -247,12 +248,6 @@ export default function DetailKulinerPage({ params }: { params: { kulinerId: str
                             <TabPanel className={classNames('rounded-xl p-3', 'focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60')}>
                                 {/* Ulasan Content */}
                                 <div className="space-y-2">
-                                    {ulasanList.map(ulasan => (
-                                        <div key={ulasan.id} className="border-b border-gray-200 pb-2">
-                                            <p><strong>{ulasan.nama}:</strong> {ulasan.ulasan}</p>
-                                            <p><strong>Rating:</strong> {ulasan.rating}</p>
-                                        </div>
-                                    ))}
                                     {
                                         session ? (
                                             <form onSubmit={handleUlasanSubmit} className="mt-4">
@@ -309,6 +304,12 @@ export default function DetailKulinerPage({ params }: { params: { kulinerId: str
                                             </div>
                                         )
                                     }
+                                    {ulasanList.map(ulasan => (
+                                        <div key={ulasan.id} className="border-b border-gray-200 pb-2">
+                                            <p><strong>{ulasan.nama}:</strong> {ulasan.ulasan}</p>
+                                            <p><strong>Rating:</strong> {ulasan.rating}</p>
+                                        </div>
+                                    ))}
                                 </div>
                             </TabPanel>
                             <TabPanel className={classNames('rounded-xl p-3', 'focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60')}>

@@ -3,9 +3,11 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { signUpWithEmail, addNewCulinary } from '@/services/firebase/auth-service';
 
 export default function RestaurantOwnerRegisterPage() {
     const router = useRouter();
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
@@ -14,10 +16,9 @@ export default function RestaurantOwnerRegisterPage() {
         e.preventDefault();
         setError(null);
 
-        const auth = getAuth();
         try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            // Jika berhasil register, arahkan ke halaman login
+            const userCredential = await addNewCulinary(name, email, password);
+            // Jika berhasil register, arahkan ke halaman login            
             router.push('/login');
         } catch (error: any) {
             setError(error.message);
@@ -34,6 +35,24 @@ export default function RestaurantOwnerRegisterPage() {
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
                     <form className="space-y-6" onSubmit={handleSubmit}>
+                        <div>
+                            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                                Restaurant Name
+                            </label>
+                            <div className="mt-1">
+                                <input
+                                    id="name"
+                                    name="name"
+                                    type="text"
+                                    autoComplete="name"
+                                    required
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                    placeholder="Restaurant Name"
+                                />
+                            </div>
+                        </div>
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                                 Email address

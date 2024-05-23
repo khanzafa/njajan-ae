@@ -6,8 +6,9 @@ import { cookies } from 'next/headers';
 
 import getServerSession from "next-auth";
 import NextAuthProvider from "@/providers/NextAuthProvider";
-import { SESSION_COOKIE_NAME } from '@/constants/constant';
+import { USER_SESSION_COOKIE_NAME, OWNER_SESSION_COOKIE_NAME } from '@/constants/constant';
 import Header from "@/components/Header/page";
+import { checkSession } from "@/actions/auth-action";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,11 +23,14 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   // const session = await getServerSession(authoptions);
-  const session = cookies().get(SESSION_COOKIE_NAME)?.value || null;
+  const session = await checkSession(); 
+  console.log
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header session={session} />
+        {
+          session?.type === 'owner' ? null : <Header session={session?.value || null } />
+        }
         {children}
         {/* <script src="../path/to/flowbite/dist/flowbite.min.js"></script> */}
       </body>
