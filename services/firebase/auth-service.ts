@@ -39,8 +39,10 @@ export async function addNewCulinary(
     const result = await setDoc(culinaryRef, {
       nama: name,
     });
+    const culinaryDoc = await getDoc(culinaryRef);
+    const culinaryData = { id: culinaryDoc.id, ...culinaryDoc.data() };
 
-    return result;
+    return culinaryData;
   } catch (error) {
     console.error('Error adding new culinary', error);
   }
@@ -53,7 +55,7 @@ export async function signInWithEmail(email: string, password: string) {
 
     if (!result || !result.user) {
       throw new Error('Email sign in failed');
-    }
+    }    
 
     return result.user.uid;
   } catch (error) {

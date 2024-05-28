@@ -17,7 +17,16 @@ export default function RestaurantOwnerRegisterPage() {
         setError(null);
 
         try {
-            const userCredential = await addNewCulinary(name, email, password);
+            const formData = new FormData();   
+            formData.append('name', name);
+            formData.append('email', email);
+            formData.append('password', password);
+            await fetch('/api/kuliner', {
+                method: 'POST',
+                body: formData
+            });
+            
+            // const userCredential = await addNewCulinary(name, email, password);
             // Jika berhasil register, arahkan ke halaman login            
             router.push('/login');
         } catch (error: any) {

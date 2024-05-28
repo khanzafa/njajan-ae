@@ -1,0 +1,85 @@
+{
+    "title": "0 Tempat Makan Terbaik Di Sukolilo (update 28 hari yang lalu)",
+    "description": "Banyak tempat makan enak di Surabaya. Salah satunya di kawasan Sukolio. Tidak sulit rasanya untuk menemukan tempat makan di Sukolio. Dari restoran hingga cafe maupun coffee shop menjadi beberapa tempat nongkrong favorit di Sukolio. Meskipun banyak tempat makan di Sukolio namun hanya ada beberapa saja tempat makan terbaik di Sukolio yang menjadi favorit. Adanya beberapa tempat makan di Sukolio menambah jajaran tempat makan di Surabaya yang wajib untuk dikunjungi.",
+    "ranking": [
+      {
+        "rank": 1,
+        "name": "Bang Oya Sop Kaki Kambing",
+        "category": "Indonesia",
+        "address": "Jl. Arief Rahman Hakim No. 207, Sukolilo, Surabaya",
+        "hours": "Senin - Minggu (18:00 - 24:00)",
+        "phone": "081331555181",
+        "price_range": "Di bawah Rp. 50.000",
+        "rating": 4.60
+      },
+      {
+        "rank": 2,
+        "name": "Pisang Ribut",
+        "category": "Snack",
+        "address": "Jl. Kejawan Gebang No. 7, Sukolilo, Surabaya",
+        "hours": "Belum ada info",
+        "price_range": "Di bawah Rp. 50.000",
+        "rating": 4.40
+      },
+      {
+        "rank": 3,
+        "name": "Foremore",
+        "category": "Kafe",
+        "address": "Jl. Dr. Ir. H. Soekarno No. 256, Sukolilo, Surabaya",
+        "hours": "Senin - Kamis (11:00 - 22:00), Jumat - Minggu (11:00 - 23:00)",
+        "phone": "08123263399",
+        "price_range": "Di bawah Rp. 50.000",
+        "rating": 4.08
+      },
+      {
+        "rank": 4,
+        "name": "Soto Ayam Lamongan Cak Har",
+        "category": "Indonesia",
+        "address": "Jl. Dr. Ir. H. Soekarno No. 220, Sukolilo, Surabaya",
+        "rating": 3.95
+      },
+      {
+        "rank": 5,
+        "name": "Bakso Pak Djo",
+        "category": "Indonesia",
+        "address": "Jl. Manyar Tirtoasri XII No. 2, Sukolilo, Surabaya",
+        "rating": 3.91
+      },
+      {
+        "rank": 6,
+        "name": "Gogogi Korean Grill",
+        "category": "Korea",
+        "address": "Ruko Icon 21, Blok R No. 8 Jl. Dr. Ir. H. Soekarno, Sukolilo, Surabaya",
+        "rating": 3.88
+      },
+      {
+        "rank": 7,
+        "name": "Soto Ayam Lamongan Cak Har",
+        "category": "Indonesia",
+        "address": "Jl. Arief Rahman Hakim No. 136, Sukolilo, Surabaya",
+        "rating": 3.83
+      },
+      {
+        "rank": 8,
+        "name": "Tropikal Coffee",
+        "category": "Kafe",
+        "address": "Jl. Keputih Timur Jaya No. 20A, Sukolilo, Surabaya",
+        "rating": 3.82
+      },
+      {
+        "rank": 9,
+        "name": "Bakso Boedjangan",
+        "category": "Indonesia",
+        "address": "Jl. Raya Manyar No. 85 - 87 (Seberang Terminal Bratang), Sukolilo, Surabaya",
+        "rating": 3.79
+      },
+      {
+        "rank": 10,
+        "name": "Kampoeng Steak",
+        "category": "Barat",
+        "address": "Jl. Nginden Intan No. 22, Sukolilo, Surabaya",
+        "rating": 3.75
+      }
+    ]
+  }
+  

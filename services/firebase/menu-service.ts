@@ -35,7 +35,7 @@ const menuService = {
             const kulinerRef = doc(firestore, 'menuKuliner', kulinerId);
             const menuCollection = collection(kulinerRef, 'menu');
             const menuSnapshot = await getDocs(menuCollection);
-            const menuList = menuSnapshot.docs.map(doc => {return {id: doc.id, ...doc.data()} as Menu});
+            const menuList = menuSnapshot.docs.map(doc => { return { id: doc.id, ...doc.data() } as Menu });
             return menuList;
         } catch (error) {
             console.error('Error getting menu: ', error);
@@ -45,11 +45,13 @@ const menuService = {
 
     // Create: Menambahkan profil kuliner baru ke dalam Firestore
     async addMenu(kulinerId: string, menuData: any) {
-        try {
-            const storageRef = ref(storage, `menuKuliner/${kulinerId}/${menuData.foto.name}`);
-            await uploadBytes(storageRef, menuData.foto);
-            const url = await getDownloadURL(storageRef);
-            menuData.foto = url;
+        try {            
+            if (menuData.foto instanceof File) {
+                const storageRef = ref(storage, `menuKuliner/${kulinerId}/${menuData.foto.name}`);
+                await uploadBytes(storageRef, menuData.foto);
+                const url = await getDownloadURL(storageRef);
+                menuData.foto = url;
+            }
             const kulinerRef = doc(firestore, 'menuKuliner', kulinerId);
             await addDoc(collection(kulinerRef, 'menu'), menuData);
         } catch (error) {
@@ -63,7 +65,7 @@ const menuService = {
             const kulinerRef = doc(firestore, 'menuKuliner', kulinerId);
             const menuRef = doc(kulinerRef, 'menu', menuId);
             const menuDoc = await getDoc(menuRef);
-            const menuData = {id: menuDoc.id, ...menuDoc.data()} as Menu;            
+            const menuData = { id: menuDoc.id, ...menuDoc.data() } as Menu;
             if (menuDoc.exists()) {
                 return menuData;
             } else {
@@ -82,7 +84,7 @@ const menuService = {
             const kulinerRef = doc(firestore, 'menuKuliner', kulinerId);
             const menuRef = doc(kulinerRef, 'menu', menuId);
             const recentMenu = await getDoc(menuRef);
-            updatedMenuData = {...recentMenu.data(), ...updatedMenuData};
+            updatedMenuData = { ...recentMenu.data(), ...updatedMenuData };
             await setDoc(menuRef, updatedMenuData);
         } catch (error) {
             console.error('Error updating menu: ', error);

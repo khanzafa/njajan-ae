@@ -191,8 +191,12 @@ export default function DetailKulinerPage({ params }: { params: { kulinerId: str
                                 </div>
                                 <div className="grid grid-cols-1 gap-4 mb-4">
                                     {/* Informasi Utama */}
-                                    <div className="flex justify-start bg-[#DBE2EF] dark:bg-[#112D4E] rounded shadow-md p-6 dark:text-[#F9F7F7]">
-                                        <img src={kuliner?.foto ? kuliner.foto : `https://source.unsplash.com/200x200/?${kuliner?.nama}`} alt="Foto Profil" className="w-25 h-50 rounded-md object-cover mr-4" />
+                                    <div className="flex flex-col lg:flex-row justify-start bg-[#DBE2EF] dark:bg-[#112D4E] rounded shadow-md p-6 dark:text-[#F9F7F7]">
+                                        <img
+                                            src={kuliner?.foto ? kuliner.foto : `https://source.unsplash.com/200x200/?${kuliner?.nama}`}
+                                            alt="Foto Profil"
+                                            className="w-24 h-24 lg:w-40 lg:h-40 rounded-md mx-auto mb-4 lg:mb-0 lg:mr-4 lg:ml-0"
+                                        />
                                         <div className="flex flex-col space-y-2">
                                             <p><span className="font-semibold">Alamat:</span> {kuliner?.alamat}</p>
                                             <p><span className="font-semibold">Waktu Operasional:</span> {kuliner?.waktu}</p>
@@ -202,11 +206,20 @@ export default function DetailKulinerPage({ params }: { params: { kulinerId: str
                                                 {rating ?
                                                     <span className="flex space-x-1">
                                                         {[1, 2, 3, 4, 5].map((star) => (
-                                                            <svg key={star} className="w-4 h-4 text-yellow-400" fill={rating >= star ? 'currentColor' : 'none'} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                            <svg
+                                                                key={star}
+                                                                className="w-4 h-4 text-yellow-400"
+                                                                fill={rating >= star ? 'currentColor' : 'none'}
+                                                                stroke="currentColor"
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                                strokeWidth="2"
+                                                                viewBox="0 0 24 24"
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                            >
                                                                 <path d="M12 2 L15.09 8.26 L22 9.27 L17 14.14 L18.18 21.02 L12 17.77 L5.82 21.02 L7 14.14 L2 9.27 L8.91 8.26 z"></path>
                                                             </svg>
                                                         ))}
-
                                                     </span>
                                                     : ' Belum ada rating'}
                                             </p>
@@ -225,9 +238,10 @@ export default function DetailKulinerPage({ params }: { params: { kulinerId: str
                                 </div>
                             </div>
                         </TabPanel>
+
                         <TabPanel className={classNames('rounded-xl p-3', 'focus:outline-none focus:ring-2 ring-offset-2 ring-offset-[#3F72AF] ring-white ring-opacity-60')}>
                             {/* Menu Content */}
-                            <div className="grid grid-cols-3 gap-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                 {menuList.map((menu) => (
                                     <div key={menu.id} className="bg-[#DBE2EF] dark:bg-[#112D4E] rounded shadow-md dark:text-[#F9F7F7] flex flex-col justify-between">
                                         {/* Detail */}
